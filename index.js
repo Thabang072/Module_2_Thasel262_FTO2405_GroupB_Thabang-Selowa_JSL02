@@ -1,6 +1,6 @@
 const welcomeMessage = () => {
     const today = new Date().toDateString();
-    document.getElementById('welcomeMessage').textContent = `🤸🏾‍♀️ Welcome to Your Fitness Tracker 🥗 Today is ${today}`;
+    document.getElementById('welcomeMessage').textContent = `🤸🏾‍♀ Welcome to Your Fitness Tracker 🥗 Today is ${today}`;
 };
 welcomeMessage();
 
@@ -14,37 +14,34 @@ const displayWorkoutRoutine = () => {
 
 document.querySelector('#submitWorkout').addEventListener('click', displayWorkoutRoutine);
 
-// ⚠️⚠️⚠️ Lesson 3: Creating and Removing Elements ⚠️⚠️⚠️
-// Function to add new fitness goals and remove completed ones
-// NOW LET'S DEBUG TO PREVENT DUPLICATE GOALS FROM BEING SUBMITTED 🚀
-
 const addNewGoal = () => {
-    const goalInput = document.querySelector('#goalInput').value;
+    const goalInput = document.querySelector('#goalInput').value.trim();
     const goalList = document.querySelector('#goalList');
+
+    if (goalInput === '') {
+        alert('Please enter your goal.');
+        return;
+    }
+
+    const existingGoals = goalList.querySelectorAll('li');
     
-    // ⚠️ Hint 1: Check for duplicates
-    // Use 'goalList' to get all existing goals and check if 'goalInput' matches any of them.
-    
-    // ⚠️ Hint 2: Prevent duplicates
-    // If a duplicate is found, display an alert to the user and don't add the goal to the list.
-    // If it's not a duplicate, proceed with adding it as a new goal.
-    
-    // ⚠️ Hint 3: Code structure
-    // You might want to wrap the duplicate-checking logic in an 'if' statement.
-    
-    // ⚠️ Hint 4: Event listener
-    // The event listener that removes goals when clicked is not related to this issue.
-    // Focus on preventing duplicates for now.
-    
+    for (let goal of existingGoals) {
+        if (goal.textContent.toLowerCase() === goalInput.toLowerCase()) {
+            alert('The Goal you entered already exists! Please enter a new goal.');
+            return;
+        }
+    }
+
     const newGoal = document.createElement('li');
     newGoal.textContent = goalInput;
     goalList.appendChild(newGoal);
+
+    document.querySelector('#goalInput').value = '';
 };
 
 // Add event listener to the goal submit button
 document.querySelector('#submitGoal').addEventListener('click', addNewGoal);
 
-///
 let waterIntake = 0;
 const updateWaterIntake = (change) => {
     waterIntake += change;
@@ -68,7 +65,7 @@ const toggleTheme = () => {
 document.querySelector('#themeToggle').addEventListener('click', toggleTheme);
 
 const submitMealPlan = (event) => {
-    event.preventDefault(); 
+    event.preventDefault();
     alert('Meal plan submitted successfully! 🍴');
 };
 
